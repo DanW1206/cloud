@@ -9,8 +9,6 @@ import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
 
-import javax.management.RuntimeErrorException;
-
 // Watch service implementation
 public class FolderWatcher {
     private WatchService watchService;
@@ -22,7 +20,9 @@ public FolderWatcher() throws IOException {
     this.watchKey = directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY, StandardWatchEventKinds.OVERFLOW);
 }
 public void watching() throws InterruptedException{
-while ((watchKey = watchService.take()) != null) {
+        // Invoking watchService.take will proceed through the event queue. 
+        // To verify it !null and still be able to use it, we must store it. Otherwise the next call will be event+1. 
+    while ((watchKey = watchService.take()) != null) {
             for (WatchEvent<?> event : watchKey.pollEvents()) {
                 System.out.println(
                   "Event kind:" + event.kind() 
