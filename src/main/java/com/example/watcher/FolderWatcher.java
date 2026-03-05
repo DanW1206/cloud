@@ -14,7 +14,7 @@ import javax.management.RuntimeErrorException;
 // Watch service implementation
 public class FolderWatcher {
     private WatchService watchService;
-    private final Path directory = Paths.get("testFolder");
+    private final Path directory = Paths.get("src/main/testFolder");
     WatchKey watchKey;
 
 public FolderWatcher() throws IOException {
